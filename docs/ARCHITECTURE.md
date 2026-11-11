@@ -1,6 +1,8 @@
-# Architecture proposal v0.1
+# Architecture proposal v0.2
 
 This document specifies proposed behavior, not implemented functionality. The original concept is Dino Silvestri's; the contracts below are engineering proposals for making that concept testable.
+
+The compact [control and evidence contract](CONTROL_CONTRACT.md) is normative for the proposed v0.2 design. The additional details below clarify its implementation boundaries.
 
 ## 1. Authoritative state
 
@@ -101,3 +103,33 @@ The controller decides acceptance according to a declared contract. It is not a 
 Use separate controller, checker, reasoner, fusion, and executor interfaces so each can be replaced or tested in isolation. Keep the deterministic checks and final acceptance path distinct: the engine produces check results; the controller verifies that the required checks exist and applies the commitment rules.
 
 The first build can run with CPU-based checking and remotely hosted model inference. Specialized REASON hardware, a shared GPU scheduler, joint training, and end-to-end differentiability are outside the initial scope.
+
+## 9. Policy changes and specification compilation
+
+Partition every task's constraints into mandatory checks and preferences before search. Hard checks cannot be waived by the neural engine, fusion engine, executor, or controller's ordinary acceptance path. Configuration authority is distinct from task execution authority. If the configured authorizer permits a policy change, record a new policy version and recheck the task; preserve the failed verdict under the old policy.
+
+The neural engine may propose new formal constraints, with source requirement references, assumptions, and examples/counterexamples. Candidates remain inactive until a separate activation check establishes allowed syntax, compatible types, rule provenance, and required preservation of existing invariants. Where the formalism supports it, prove that the proposed replacement implies the mandatory baseline and check satisfiability to detect vacuous success. Solver timeout is not approval.
+
+Formal consistency alone cannot establish that the translation captures human intent. An underspecified requirement needs review or remains unresolved. Human approval is a recorded decision, not a mathematical guarantee. During a frozen evaluation trial, neither the task's mandatory grading contract nor the held-out grader may be changed. Additional agent-written tests are development aids only.
+
+## 10. Capability attenuation
+
+A root grant records the identity and authority of its issuer, subject, audience, task scope, allowed operations/resources, expiry, policy binding, delegation permission, and budgets. Controller-issued roots must be grounded in existing configured authority; the controller cannot invent authority beyond it. This is a project-specific capability design, not a claim of PCM conformance, whose cited grant model is person-rooted.
+
+Each child grant names its parent and may only narrow permissions, resources, duration, and delegation depth. Recheck the complete chain and revocation state at use time. Restrict caveats to a typed language in which subset checks are decidable; unknown implication fails closed.
+
+Budget conservation is global across sibling grants: allocating ten units to each of two children must not spend twice from a ten-unit parent. Reserve and consume shared budgets atomically. Replays and restarts cannot reset consumption. An executor cannot pass its authority to another audience or use credentials outside the gate.
+
+## 11. Receipts, independent checking, and human handoff
+
+Every committed result has a durable acceptance receipt and its evidence dependencies. Record the receipt and state update transactionally, or through a recovery protocol that prevents an accepted state without its receipt. A separate verifier re-evaluates the acceptance predicates or checks supported proof certificates from the bound evidence. It must detect omitted required checks as well as altered values. A signed list of unchecked assertions is not a proof.
+
+Verification establishes contract satisfaction against an identified historical state. External state may change afterward, and a fresh action must recheck its dependencies. Artifact hashing needs a canonical manifest including relevant code, tests, configuration, and dependencies; hashing only the edited file is insufficient when other inputs affect verification.
+
+Unresolved tasks produce an inspectable handoff with reason codes, candidate conflicts, failed and unknown checks, relevant evidence, state/artifact/policy identifiers, and remaining options. An authorized reviewer may clarify intent, authorize a separately versioned policy change, or reject the task. Any resumed execution receives new bounded authority and current-state validation.
+
+## 12. Abstention and calibrated ranking
+
+The fusion engine must be able to return `ABSTAIN` rather than select a candidate. Reasons include insufficient evidence, inconsistent premises, stale observations, and uncalibrated uncertainty where a decision requires calibrated estimates. A confidence threshold cannot override a hard constraint.
+
+Evaluate probability calibration on separate validation data and retain the calibration version and domain. Report reliability and an appropriate proper scoring rule, plus decision coverage versus error as abstention varies. Do not tune thresholds on the held-out final tasks. The initial heuristic scoring baseline remains explicitly non-probabilistic.

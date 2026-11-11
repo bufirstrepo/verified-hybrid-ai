@@ -97,13 +97,17 @@ The project succeeds only if the additional structure produces a measured benefi
 
 ## Read more
 
+- [Control and evidence contract v0.2](docs/CONTROL_CONTRACT.md)
 - [Architecture and execution contracts](docs/ARCHITECTURE.md)
 - [Prototype roadmap and evaluation](docs/ROADMAP.md)
 - [Community pitch and repository description](docs/COMMUNITY_PITCH.md)
 - [Sources and relationship to prior work](docs/REFERENCES.md)
+- [Research review and qualifications](docs/RESEARCH_REVIEW.md)
 - [How to contribute](CONTRIBUTING.md)
 
 ## Feedback wanted
+
+The v0.2 design adds explicit hard/soft constraint handling, acceptance receipts, narrowing capability grants, protected grading, and bounded escalation. These additions make the proposal easier to falsify and audit; they do not add another reasoning engine or claim new performance results.
 
 I am looking for feedback from people working on agent runtimes, formal verification, probabilistic inference, and C++ systems. In particular:
 

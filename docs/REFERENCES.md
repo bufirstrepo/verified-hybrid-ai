@@ -42,4 +42,6 @@ Role: Beam is the proposed execution model, developed by Reflection and previewe
 
 ## Scope of the literature review
 
+The supplemental [research review](RESEARCH_REVIEW.md) maps SCL, FormalJudge, ATA, patch-correctness evaluation, uncertainty-gated logical reasoning, and zkARc to concrete design additions. It records which sources were inspected and which claims remain unverified. The [control contract](CONTROL_CONTRACT.md) is this project's proposed synthesis, not a claim of implementation or conformance to those systems.
+
 This is a focused source check for the technologies named in the proposal, not a systematic novelty review. Before making research priority claims, compare implemented neuro-symbolic systems, blackboard architectures, runtime assurance, tool-gated agents, and evidence-aware multi-agent systems. Record similarities as well as differences.

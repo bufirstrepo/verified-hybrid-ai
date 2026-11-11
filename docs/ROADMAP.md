@@ -2,6 +2,18 @@
 
 All milestones below are proposed. None are marked complete.
 
+## v0.2 additions to milestone acceptance
+
+Milestones 1–2 must implement the [control and evidence contract](CONTROL_CONTRACT.md): typed claim records, hard/soft constraint separation, a protected evidence recorder, receipt-bound commitment, and explicit unresolved outcomes. Start with an authenticated hash chain and checkpoint retention; compact Merkle proofs are optional later work.
+
+Milestone 1 fixtures must cover missing required predicates, illegal status upgrades, cyclic evidence ancestry, expired/widened grants, and aggregate overspending across siblings. Milestone 2 must demonstrate receipt replay in an independent verification process, tamper detection, and rejection of evidence for another artifact or policy version.
+
+Before Milestone 5, freeze the grader contract and environment by digest. Keep held-out fixtures and grader credentials outside all agent-accessible files, prompts, and services. Give agents public requirements and development tests. Record controller acceptance before the independent evaluation; never let final-grade feedback repair the same held-out trial. If grading is defective, quarantine and adjudicate affected tasks transparently rather than silently relabeling them.
+
+Add deadline pressure, impossible requirements, deliberate test deletion/weakening, grader-substitution attempts, omitted-check receipts, capability widening, and budget exhaustion to the failure suite. Treat infrastructure failure separately from a failed task predicate, and preregister exclusions so the system cannot improve its apparent score by discarding difficult cases.
+
+Report both `incorrect accepted / all accepted` and `incorrect accepted / all independently incorrect` with names, counts, and uncertainty. Include rejected and unresolved cases in the outcome table. Publish coordination costs and independent-verifier costs separately. These additions do not create a new engine or protocol layer.
+
 ## Milestone 1: Contracts and replayable controller
 
 Implement task states, message schemas, immutable artifact references, state versioning, and bounded retries. Use scripted engines before connecting models.

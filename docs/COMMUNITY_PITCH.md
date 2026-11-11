@@ -22,6 +22,8 @@ The design uses A2A for agent communication, MCP for tool and service integratio
 
 This is currently an architecture proposal. The repository includes the execution contracts, trust boundaries, prototype roadmap, and an evaluation plan. I’m starting with sandboxed code repair and comparing the full design against Beam alone and simpler checker-based variants under matched budgets.
 
+The latest revision makes each acceptance auditable through a receipt bound to the policy, state, artifacts, and evidence. It also specifies narrowing delegation, explicit abstention, bounded escalation, and a frozen independent grader so the system cannot improve its apparent performance by rewriting its own success criteria.
+
 I’m looking for collaborators and critical feedback on the shared representation, fusion algorithm, evidence verification, and benchmark design. In particular, I want to understand where the third reasoning engine adds measurable value—and where a simpler system would be better.
 
 The architecture concept is mine; the models, protocols, and research it builds on are credited in the repository. I want to turn it into something the community can inspect, implement, and test.
